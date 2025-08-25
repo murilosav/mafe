@@ -441,10 +441,6 @@ body {
 }
 
 .final-message-card {
-    background: linear-gradient(135deg, 
-        rgba(232, 180, 203, 0.9), 
-        rgba(139, 90, 107, 0.85)
-    );
     backdrop-filter: blur(25px);
     color: var(--cream);
     padding: 4rem 3rem;
@@ -483,7 +479,6 @@ body {
 .final-message-card p {
     font-size: 1.1rem;
     line-height: 1.8;
-    margin-bottom: 1.2rem;
     position: relative;
     z-index: 1;
     font-weight: 300;
@@ -646,8 +641,9 @@ html {
 .ascii-art {
     font-family: 'Courier New', monospace;
     font-size: 6px;
+    font-weight: 900;
     line-height: 1;
-    color: #c500a3;
+    color: #702877;
     white-space: pre;
     margin: 0;
     padding: 0.5rem;

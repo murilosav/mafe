@@ -605,3 +605,198 @@ html {
         var(--blush) 100%
     );
 }
+
+
+
+
+/* Seção da Arte ASCII - Versão funcional */
+.ascii-art-section {
+    margin: 4rem 0;
+    animation: fadeInSoft 1.2s ease-out 1s both;
+}
+
+.ascii-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem 0;
+}
+
+.ascii-frame {
+    position: relative;
+    background: var(--glass);
+    backdrop-filter: blur(25px);
+    border-radius: 25px;
+    padding: 1.5rem;
+    border: 1.5px solid var(--glass-border);
+    box-shadow: 
+        0 25px 60px var(--shadow-soft),
+        inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    width: 100%;
+    max-width: 100%;
+    
+    /* SCROLL HORIZONTAL FUNCIONANDO */
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+}
+
+.ascii-frame::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--rose-gold), var(--mauve), var(--rose-gold));
+    border-radius: 25px 25px 0 0;
+    background-size: 300px 100%;
+    animation: shimmerRose 4s ease-in-out infinite;
+    z-index: 1;
+}
+
+.ascii-art {
+    font-family: 'Courier New', monospace;
+    font-size: 11px;
+    line-height: 1;
+    color: #f1006f;
+    white-space: pre;
+    margin: 0;
+    padding: 0.5rem;
+    text-shadow: 0 0 2px rgba(232, 180, 203, 0.3);
+    background: transparent;
+    border: none;
+    outline: none;
+    animation: breathe 8s ease-in-out infinite;
+    
+    /* CRUCIAL: Definir largura e altura corretas */
+    width: max-content;
+    height: auto;
+    display: block;
+    
+    /* Garantir que não quebre */
+    word-wrap: normal;
+    word-break: keep-all;
+    overflow-wrap: normal;
+}
+
+/* Scrollbar estilizada e funcional */
+.ascii-frame::-webkit-scrollbar {
+    height: 12px;
+}
+
+.ascii-frame::-webkit-scrollbar-track {
+    background: linear-gradient(90deg, 
+        rgba(232, 180, 203, 0.2) 0%, 
+        rgba(248, 215, 218, 0.3) 50%, 
+        rgba(232, 180, 203, 0.2) 100%
+    );
+    border-radius: 6px;
+    margin: 0 10px;
+}
+
+.ascii-frame::-webkit-scrollbar-thumb {
+    background: linear-gradient(90deg, var(--rose-gold), var(--mauve));
+    border-radius: 6px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 
+        0 2px 6px rgba(232, 180, 203, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    transition: all 0.3s ease;
+}
+
+.ascii-frame::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(90deg, var(--burgundy), var(--rose-gold));
+    box-shadow: 
+        0 3px 8px rgba(232, 180, 203, 0.6),
+        inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    transform: scaleY(1.1);
+}
+
+/* Para Firefox */
+.ascii-frame {
+    scrollbar-width: thin;
+    scrollbar-color: var(--rose-gold) rgba(232, 180, 203, 0.2);
+}
+
+.ascii-art:hover {
+    color: #b10455;
+    text-shadow: 0 0 4px rgba(232, 180, 203, 0.5);
+    transition: all 0.3s ease;
+}
+
+.ascii-caption {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(232, 180, 203, 0.3);
+}
+
+.ascii-caption p {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.4rem;
+    background: linear-gradient(135deg, var(--rose-gold), var(--burgundy));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    margin: 0;
+}
+
+/* MEDIA QUERIES */
+@media (max-width: 768px) {
+    .ascii-frame {
+        padding: 1rem;
+        margin: 0 0.5rem;
+    }
+    
+    .ascii-frame::-webkit-scrollbar {
+        height: 10px;
+    }
+    
+    .ascii-caption p {
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .ascii-frame {
+        padding: 0.8rem;
+        margin: 0 0.25rem;
+    }
+    
+    .ascii-frame::-webkit-scrollbar {
+        height: 8px;
+    }
+    
+    .ascii-caption p {
+        font-size: 1.1rem;
+    }
+}
+
+/* Animações */
+.ascii-art-section.in-view .ascii-art {
+    animation: breathe 8s ease-in-out infinite, fadeInCenter 2s ease-out;
+}
+
+@keyframes fadeInCenter {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.ascii-frame:hover {
+    box-shadow: 
+        0 30px 80px var(--shadow-medium),
+        inset 0 1px 0 rgba(255, 255, 255, 0.6),
+        0 0 20px rgba(232, 180, 203, 0.2);
+    transform: translateY(-2px);
+    transition: all 0.3s ease;
+}

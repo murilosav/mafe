@@ -142,126 +142,213 @@ window.addEventListener('scroll', () => {
     
     document.querySelector('.floating-hearts').style.transform = `translateY(${parallax}px)`;
 });
-// Inicializar quando a página carregar
-document.addEventListener('DOMContentLoaded', function() {
-    // Verificar se a imagem de fundo carregou
-    const backgroundImg = document.getElementById('backgroundImg');
+
+
+// Classe para gerenciar scroll customizado
+class CustomScrollbar {
+    constructor(container, scrollbar, thumb) {
+        this.container = container;
+        this.scrollbar = scrollbar;
+        this.thumb = thumb;
+        this.isDragging = false;
+        this.startX = 0;
+        this.startScrollLeft = 0;
+        
+        this.init();
+    }
     
-    backgroundImg.onerror = function() {
-        // Se a foto não carregar, usar gradiente rosa
-        document.querySelector('.background-photo').style.background = 
-            'linear-gradient(135deg, #fff5f8 0%, #ffe8f1 100%)';
-        backgroundImg.style.display = 'none';
-    };
+    init() {
+        this.updateThumb();
+        this.bindEvents();
+        this.centerScroll();
+    }
     
-    // Adicionar animações suaves de entrada
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    };
+    updateThumb() {
+        const containerWidth = this.container.clientWidth;
+        const contentWidth = this.container.scrollWidth;
+        const scrollbarWidth = this.scrollbar.clientWidth;
+        
+        if (contentWidth <= containerWidth) {
+            this.scrollbar.style.display = 'none';
+            return;
+        }
+        
+        this.scrollbar.style.display = 'block';
+        
+        // Calcular largura do thumb baseado na proporção
+        const thumbWidth = Math.max(30, (containerWidth / contentWidth) * scrollbarWidth);
+        this.thumb.style.width = thumbWidth + 'px';
+        
+        // Calcular posição do thumb
+        const scrollPercentage = this.container.scrollLeft / (contentWidth - containerWidth);
+        const maxThumbPosition = scrollbarWidth - thumbWidth;
+        const thumbPosition = scrollPercentage * maxThumbPosition;
+        
+        this.thumb.style.left = thumbPosition + 'px';
+    }
     
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
+    centerScroll() {
+        // Aguardar renderização
+        setTimeout(() => {
+            const containerWidth = this.container.clientWidth;
+            const contentWidth = this.container.scrollWidth;
+            
+            if (contentWidth > containerWidth) {
+                const centerPosition = (contentWidth - containerWidth) / 2;
+                this.container.scrollLeft = centerPosition;
+                this.updateThumb();
+            }
+        }, 100);
+    }
+    
+    bindEvents() {
+        // Scroll do container atualiza o thumb
+        this.container.addEventListener('scroll', () => {
+            if (!this.isDragging) {
+                this.updateThumb();
             }
         });
-    }, observerOptions);
+        
+        // Clique na track da scrollbar
+        this.scrollbar.addEventListener('click', (e) => {
+            if (e.target === this.scrollbar || e.target.classList.contains('scrollbar-track')) {
+                const rect = this.scrollbar.getBoundingClientRect();
+                const clickX = e.clientX - rect.left;
+                const scrollbarWidth = this.scrollbar.clientWidth;
+                const thumbWidth = this.thumb.clientWidth;
+                
+                const targetPosition = clickX - (thumbWidth / 2);
+                const maxPosition = scrollbarWidth - thumbWidth;
+                const clampedPosition = Math.max(0, Math.min(targetPosition, maxPosition));
+                
+                const scrollPercentage = clampedPosition / maxPosition;
+                const containerWidth = this.container.clientWidth;
+                const contentWidth = this.container.scrollWidth;
+                const targetScrollLeft = scrollPercentage * (contentWidth - containerWidth);
+                
+                this.container.scrollTo({
+                    left: targetScrollLeft,
+                    behavior: 'smooth'
+                });
+            }
+        });
+        
+        // Drag do thumb
+        this.thumb.addEventListener('mousedown', (e) => {
+            e.preventDefault();
+            this.isDragging = true;
+            this.startX = e.clientX;
+            this.startScrollLeft = this.container.scrollLeft;
+            
+            document.addEventListener('mousemove', this.handleMouseMove);
+            document.addEventListener('mouseup', this.handleMouseUp);
+        });
+        
+        // Touch events para mobile
+        this.thumb.addEventListener('touchstart', (e) => {
+            this.isDragging = true;
+            this.startX = e.touches[0].clientX;
+            this.startScrollLeft = this.container.scrollLeft;
+            
+            document.addEventListener('touchmove', this.handleTouchMove);
+            document.addEventListener('touchend', this.handleTouchEnd);
+        });
+        
+        // Resize
+        window.addEventListener('resize', () => {
+            this.updateThumb();
+            setTimeout(() => this.centerScroll(), 100);
+        });
+    }
     
-    // Observar elementos para animação
-    document.querySelectorAll('.letter-section, .featured-photo-section, .final-section').forEach(el => {
-        observer.observe(el);
+    handleMouseMove = (e) => {
+        if (!this.isDragging) return;
+        
+        const deltaX = e.clientX - this.startX;
+        const scrollbarWidth = this.scrollbar.clientWidth;
+        const thumbWidth = this.thumb.clientWidth;
+        const maxThumbPosition = scrollbarWidth - thumbWidth;
+        
+        const containerWidth = this.container.clientWidth;
+        const contentWidth = this.container.scrollWidth;
+        const maxScrollLeft = contentWidth - containerWidth;
+        
+        const deltaScrollLeft = (deltaX / maxThumbPosition) * maxScrollLeft;
+        const newScrollLeft = Math.max(0, Math.min(this.startScrollLeft + deltaScrollLeft, maxScrollLeft));
+        
+        this.container.scrollLeft = newScrollLeft;
+        this.updateThumb();
+    }
+    
+    handleMouseUp = () => {
+        this.isDragging = false;
+        document.removeEventListener('mousemove', this.handleMouseMove);
+        document.removeEventListener('mouseup', this.handleMouseUp);
+    }
+    
+    handleTouchMove = (e) => {
+        if (!this.isDragging) return;
+        
+        const deltaX = e.touches[0].clientX - this.startX;
+        const scrollbarWidth = this.scrollbar.clientWidth;
+        const thumbWidth = this.thumb.clientWidth;
+        const maxThumbPosition = scrollbarWidth - thumbWidth;
+        
+        const containerWidth = this.container.clientWidth;
+        const contentWidth = this.container.scrollWidth;
+        const maxScrollLeft = contentWidth - containerWidth;
+        
+        const deltaScrollLeft = (deltaX / maxThumbPosition) * maxScrollLeft;
+        const newScrollLeft = Math.max(0, Math.min(this.startScrollLeft + deltaScrollLeft, maxScrollLeft));
+        
+        this.container.scrollLeft = newScrollLeft;
+        this.updateThumb();
+    }
+    
+    handleTouchEnd = () => {
+        this.isDragging = false;
+        document.removeEventListener('touchmove', this.handleTouchMove);
+        document.removeEventListener('touchend', this.handleTouchEnd);
+    }
+}
+
+// Inicializar scroll customizado
+function initCustomScroll() {
+    const container = document.getElementById('asciiScrollContainer');
+    const scrollbar = document.getElementById('customScrollbar');
+    const thumb = document.getElementById('scrollbarThumb');
+    
+    if (container && scrollbar && thumb) {
+        const customScroll = new CustomScrollbar(container, scrollbar, thumb);
+        
+        // Observer para animar quando aparecer na tela
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.closest('.ascii-art-section')?.classList.add('in-view');
+                    setTimeout(() => customScroll.centerScroll(), 200);
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        observer.observe(container);
+        
+        return customScroll;
+    }
+}
+
+// Inicializar quando o DOM carregar
+document.addEventListener('DOMContentLoaded', function() {
+    const customScroll = initCustomScroll();
+    
+    // Recentralizar após fonts carregarem
+    document.fonts.ready.then(() => {
+        setTimeout(() => {
+            if (customScroll) {
+                customScroll.centerScroll();
+            }
+        }, 300);
     });
     
-    // Adicionar movimento sutil aos corações flutuantes
-    setInterval(createFloatingHeart, 8000);
-    
-    // Tocar som suave quando a página carrega
-    setTimeout(playWelcomeSound, 1000);
-    
-    // Efeito parallax sutil no scroll
-    window.addEventListener('scroll', handleScrollEffects);
-});
-
-// Som suave de boas-vindas
-function playWelcomeSound() {
-    try {
-        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-        const frequencies = [523.25, 659.25, 783.99]; // C5, E5, G5
-        
-        frequencies.forEach((freq, index) => {
-            setTimeout(() => {
-                const oscillator = audioContext.createOscillator();
-                const gainNode = audioContext.createGain();
-                
-                oscillator.connect(gainNode);
-                gainNode.connect(audioContext.destination);
-                
-                oscillator.frequency.setValueAtTime(freq, audioContext.currentTime);
-                oscillator.type = 'sine';
-                
-                gainNode.gain.setValueAtTime(0, audioContext.currentTime);
-                gainNode.gain.linearRampToValueAtTime(0.03, audioContext.currentTime + 0.1);
-                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 1.5);
-                
-                oscillator.start(audioContext.currentTime);
-                oscillator.stop(audioContext.currentTime + 1.5);
-            }, index * 300);
-        });
-    } catch (e) {
-        // Silenciosamente falha se o áudio não estiver disponível
-    }
-}
-
-// Criar novos corações flutuantes ocasionalmente
-function createFloatingHeart() {
-    const heart = document.createElement('div');
-    heart.innerHTML = '♡';
-    heart.style.position = 'fixed';
-    heart.style.fontSize = Math.random() * 10 + 15 + 'px';
-    heart.style.color = 'rgba(255, 255, 255, 0.6)';
-    heart.style.textShadow = '0 0 10px rgba(255, 107, 157, 0.5)';
-    heart.style.top = Math.random() * 100 + 'vh';
-    heart.style.left = Math.random() * 100 + 'vw';
-    heart.style.zIndex = '1';
-    heart.style.pointerEvents = 'none';
-    heart.style.animation = 'floatHeart 10s ease-in-out forwards';
-    
-    document.body.appendChild(heart);
-    
-    setTimeout(() => heart.remove(), 10000);
-}
-
-// Efeitos no scroll
-function handleScrollEffects() {
-    const scrolled = window.pageYOffset;
-    const parallax = scrolled * 0.2;
-    
-    // Movimento parallax nos corações
-    document.querySelector('.floating-hearts').style.transform = `translateY(${parallax}px)`;
-    
-    // Efeito sutil no blur da foto de fundo
-    const backgroundImg = document.querySelector('.background-photo img');
-    if (backgroundImg && backgroundImg.style.display !== 'none') {
-        const blurAmount = Math.min(8 + scrolled * 0.01, 12);
-        backgroundImg.style.filter = `blur(${blurAmount}px) brightness(0.7)`;
-    }
-}
-
-// Efeito hover na foto especial
-document.addEventListener('DOMContentLoaded', function() {
-    const specialPhoto = document.querySelector('.photo-frame-special');
-    
-    if (specialPhoto) {
-        specialPhoto.addEventListener('mouseenter', () => {
-            specialPhoto.style.transform = 'scale(1.05) rotate(2deg)';
-            specialPhoto.style.filter = 'saturate(1.2)';
-        });
-        
-        specialPhoto.addEventListener('mouseleave', () => {
-            specialPhoto.style.transform = 'scale(1) rotate(0deg)';
-            specialPhoto.style.filter = 'saturate(1)';
-        });
-    }
+    // ... resto do seu código
 });

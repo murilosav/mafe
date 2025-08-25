@@ -1,0 +1,607 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    /* Paleta romântica e aesthetic */
+    --rose-gold: #e8b4cb;
+    --soft-pink: #f8d7da;
+    --blush: #fadadd;
+    --mauve: #ddb3d0;
+    --dusty-rose: #d4a5a5;
+    --cream: #fff8f6;
+    --pearl: #faf7f4;
+    --sage: #b8c5b8;
+    --lavender: #e6dff0;
+    --burgundy: #8b5a6b;
+    --charcoal: #4a4a4a;
+    --soft-gray: #7a7a7a;
+    
+    /* Sombras suaves */
+    --shadow-soft: rgba(232, 180, 203, 0.3);
+    --shadow-medium: rgba(232, 180, 203, 0.4);
+    --shadow-strong: rgba(139, 90, 107, 0.3);
+    
+    /* Vidro fosco */
+    --glass: rgba(255, 248, 246, 0.85);
+    --glass-border: rgba(232, 180, 203, 0.2);
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    line-height: 1.7;
+    color: var(--charcoal);
+    min-height: 100vh;
+    overflow-x: hidden;
+    font-weight: 300;
+    letter-spacing: 0.3px;
+}
+
+/* Foto de fundo com blur aesthetic */
+.background-photo {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+    overflow: hidden;
+}
+
+.background-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: blur(12px) brightness(0.8) sepia(20%) saturate(1.2);
+    transform: scale(1.15);
+    transition: all 0.5s ease;
+}
+
+.photo-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        145deg, 
+        rgba(232, 180, 203, 0.35) 0%, 
+        rgba(248, 215, 218, 0.25) 30%,
+        rgba(255, 248, 246, 0.4) 70%,
+        rgba(221, 179, 208, 0.3) 100%
+    );
+    z-index: -1;
+}
+
+/* Animações suaves e romantic */
+@keyframes floatGentle {
+    0%, 100% { 
+        transform: translateY(0px) rotate(0deg); 
+        opacity: 0.7;
+    }
+    50% { 
+        transform: translateY(-15px) rotate(2deg); 
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInSoft {
+    from {
+        opacity: 0;
+        transform: translateY(25px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes breathe {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.01); }
+}
+
+@keyframes shimmerRose {
+    0% { 
+        background-position: -300px 0;
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% { 
+        background-position: calc(300px + 100%) 0;
+        opacity: 0;
+    }
+}
+
+@keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    25% { transform: scale(1.05); }
+    50% { transform: scale(1); }
+    75% { transform: scale(1.02); }
+}
+
+/* Corações flutuantes aesthetic */
+.floating-hearts {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.heart {
+    position: absolute;
+    font-size: 1.8rem;
+    color: rgba(232, 180, 203, 0.6);
+    animation: floatGentle 8s ease-in-out infinite;
+    text-shadow: 0 0 20px rgba(232, 180, 203, 0.4);
+    filter: drop-shadow(0 2px 4px rgba(232, 180, 203, 0.3));
+}
+
+.heart:nth-child(1) {
+    top: 12%;
+    left: 8%;
+    animation-delay: 0s;
+    font-size: 1.6rem;
+}
+
+.heart:nth-child(2) {
+    top: 65%;
+    right: 10%;
+    animation-delay: 3s;
+    font-size: 2rem;
+}
+
+.heart:nth-child(3) {
+    bottom: 15%;
+    left: 12%;
+    animation-delay: 6s;
+    font-size: 1.7rem;
+}
+
+/* Container principal */
+.container {
+    max-width: 850px;
+    margin: 0 auto;
+    padding: 3rem 1.5rem;
+    position: relative;
+    z-index: 2;
+}
+
+/* Cabeçalho romantic */
+.main-header {
+    text-align: center;
+    margin-bottom: 4rem;
+    animation: fadeInSoft 1.2s ease-out;
+    background: var(--glass);
+    backdrop-filter: blur(25px);
+    border-radius: 30px;
+    padding: 3rem 2rem;
+    border: 1.5px solid var(--glass-border);
+    box-shadow: 
+        0 20px 50px var(--shadow-soft),
+        inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+.heart-icon {
+    font-size: 3.5rem;
+    margin-bottom: 1.5rem;
+    animation: heartbeat 4s infinite ease-in-out;
+    filter: drop-shadow(0 4px 8px rgba(232, 180, 203, 0.4));
+}
+
+.main-title {
+    font-family: 'Great Vibes', cursive;
+    font-size: 3.8rem;
+    font-weight: 400;
+    background: linear-gradient(135deg, var(--rose-gold), var(--burgundy));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 0.8rem;
+    text-shadow: none;
+    letter-spacing: 1px;
+}
+
+.subtitle {
+    font-size: 1.1rem;
+    color: var(--soft-gray);
+    font-weight: 400;
+    font-style: italic;
+    letter-spacing: 0.5px;
+}
+
+/* Seção da foto destacada aesthetic */
+.featured-photo-section {
+    margin-bottom: 5rem;
+    animation: fadeInSoft 1.2s ease-out 0.4s both;
+}
+
+.featured-photo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.photo-frame-special {
+    position: relative;
+    width: 320px;
+    height: 320px;
+    border-radius: 50%;
+    overflow: hidden;
+    background: var(--pearl);
+    box-shadow: 
+        0 25px 70px var(--shadow-medium),
+        inset 0 0 0 8px rgba(232, 180, 203, 0.2),
+        0 0 0 1px rgba(255, 255, 255, 0.8);
+    animation: breathe 6s ease-in-out infinite;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+}
+
+.photo-frame-special::before {
+    content: '';
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    right: -3px;
+    bottom: -3px;
+    border-radius: 50%;
+    background: linear-gradient(45deg, var(--rose-gold), var(--mauve), var(--rose-gold));
+    z-index: -1;
+    opacity: 0.7;
+}
+
+.photo-frame-special:hover {
+    transform: scale(1.03) rotate(1deg);
+    box-shadow: 
+        0 35px 90px var(--shadow-strong),
+        inset 0 0 0 8px rgba(232, 180, 203, 0.3),
+        0 0 0 1px rgba(255, 255, 255, 1);
+}
+
+.photo-frame-special img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: saturate(1.1) contrast(1.05);
+}
+
+.photo-placeholder-special {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding: 2rem;
+    text-align: center;
+    background: linear-gradient(135deg, var(--blush), var(--cream));
+    color: var(--soft-gray);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+.placeholder-heart {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    animation: heartbeat 3s infinite;
+    color: var(--rose-gold);
+}
+
+.photo-caption {
+    position: absolute;
+    bottom: -70px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--glass);
+    backdrop-filter: blur(20px);
+    border-radius: 25px;
+    padding: 1.2rem 2.5rem;
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 15px 35px var(--shadow-soft);
+}
+
+.photo-caption p {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.3rem;
+    color: var(--burgundy);
+    font-weight: 500;
+    margin: 0;
+    text-align: center;
+    letter-spacing: 0.3px;
+}
+
+/* Carta aesthetic */
+.letter-section {
+    margin-bottom: 5rem;
+    animation: fadeInSoft 1.2s ease-out 0.8s both;
+}
+
+.letter-card {
+    background: var(--glass);
+    backdrop-filter: blur(25px);
+    border-radius: 35px;
+    padding: 4rem 3rem;
+    box-shadow: 
+        0 30px 80px var(--shadow-soft),
+        inset 0 1px 0 rgba(255, 255, 255, 0.5);
+    border: 1.5px solid var(--glass-border);
+    position: relative;
+    overflow: hidden;
+}
+
+.letter-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: linear-gradient(90deg, var(--rose-gold), var(--mauve), var(--rose-gold));
+    background-size: 300px 100%;
+    animation: shimmerRose 4s ease-in-out infinite;
+}
+
+.letter-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid rgba(232, 180, 203, 0.3);
+}
+
+.letter-title {
+    font-family: 'Dancing Script', cursive;
+    font-size: 2.8rem;
+    background: linear-gradient(135deg, var(--rose-gold), var(--burgundy));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.date {
+    color: var(--soft-gray);
+    font-style: italic;
+    font-size: 0.95rem;
+    font-weight: 300;
+    letter-spacing: 0.3px;
+}
+
+.letter-content p {
+    margin-bottom: 2rem;
+    font-size: 1.05rem;
+    line-height: 1.9;
+    color: var(--charcoal);
+    text-align: justify;
+    font-weight: 300;
+    letter-spacing: 0.2px;
+}
+
+.letter-content p:first-of-type::first-letter {
+    font-size: 4rem;
+    font-family: 'Dancing Script', cursive;
+    float: left;
+    line-height: 1;
+    padding-right: 8px;
+    padding-top: 4px;
+    color: var(--rose-gold);
+    font-weight: 600;
+}
+
+.final-message {
+    font-size: 1.3rem !important;
+    font-weight: 500;
+    background: linear-gradient(135deg, var(--burgundy), var(--rose-gold));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-align: center;
+    margin-bottom: 3rem !important;
+    font-style: italic;
+    line-height: 1.6;
+}
+
+.signature {
+    text-align: center;
+    margin-top: 3rem;
+    padding-top: 2.5rem;
+    border-top: 1px solid rgba(232, 180, 203, 0.3);
+}
+
+.signature p {
+    margin-bottom: 0.8rem !important;
+    font-weight: 500;
+}
+
+.author {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.6rem !important;
+    background: linear-gradient(135deg, var(--rose-gold), var(--burgundy));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+/* Seção final aesthetic */
+.final-section {
+    animation: fadeInSoft 1.2s ease-out 1.2s both;
+}
+
+.final-message-card {
+    background: linear-gradient(135deg, 
+        rgba(232, 180, 203, 0.9), 
+        rgba(139, 90, 107, 0.85)
+    );
+    backdrop-filter: blur(25px);
+    color: var(--cream);
+    padding: 4rem 3rem;
+    border-radius: 35px;
+    text-align: center;
+    box-shadow: 
+        0 30px 80px var(--shadow-strong),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.final-message-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+    transform: rotate(45deg);
+    animation: shimmerRose 5s ease-in-out infinite;
+}
+
+.final-message-card h3 {
+    font-family: 'Dancing Script', cursive;
+    font-size: 2.2rem;
+    margin-bottom: 2rem;
+    font-weight: 600;
+    position: relative;
+    z-index: 1;
+    letter-spacing: 0.5px;
+}
+
+.final-message-card p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    margin-bottom: 1.2rem;
+    position: relative;
+    z-index: 1;
+    font-weight: 300;
+    letter-spacing: 0.2px;
+}
+
+.hearts {
+    font-size: 1.8rem;
+    margin-top: 2rem;
+    animation: heartbeat 3s infinite;
+    position: relative;
+    z-index: 1;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+/* Responsividade aesthetic */
+@media (max-width: 768px) {
+    .container {
+        padding: 2rem 1.2rem;
+    }
+    
+    .main-header {
+        padding: 2.5rem 1.8rem;
+        margin-bottom: 3rem;
+    }
+    
+    .main-title {
+        font-size: 3rem;
+    }
+    
+    .letter-title {
+        font-size: 2.2rem;
+    }
+    
+    .letter-card {
+        padding: 3rem 2rem;
+    }
+    
+    .final-message-card {
+        padding: 3rem 2rem;
+    }
+    
+    .photo-frame-special {
+        width: 280px;
+        height: 280px;
+    }
+    
+    .photo-caption {
+        bottom: -60px;
+        padding: 1rem 2rem;
+    }
+    
+    .letter-content p:first-of-type::first-letter {
+        font-size: 3rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .main-title {
+        font-size: 2.5rem;
+    }
+    
+    .letter-title {
+        font-size: 2rem;
+    }
+    
+    .letter-content p {
+        font-size: 1rem;
+    }
+    
+    .heart-icon {
+        font-size: 3rem;
+    }
+    
+    .photo-frame-special {
+        width: 250px;
+        height: 250px;
+    }
+    
+    .main-header {
+        padding: 2rem 1.5rem;
+    }
+    
+    .letter-card {
+        padding: 2.5rem 1.8rem;
+    }
+    
+    .final-message-card {
+        padding: 2.5rem 1.8rem;
+    }
+    
+    .letter-content p:first-of-type::first-letter {
+        font-size: 2.5rem;
+        padding-right: 6px;
+    }
+}
+
+/* Detalhes aesthetic extras */
+.letter-content p::selection {
+    background: var(--blush);
+    color: var(--burgundy);
+}
+
+.letter-content p::-moz-selection {
+    background: var(--blush);
+    color: var(--burgundy);
+}
+
+/* Scroll suave */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Efeito adicional para quando não há foto */
+.background-photo img[style*="display: none"] + .photo-overlay {
+    background: linear-gradient(135deg, 
+        var(--cream) 0%, 
+        var(--pearl) 50%, 
+        var(--blush) 100%
+    );
+}

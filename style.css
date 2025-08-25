@@ -406,7 +406,7 @@ body {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    text-align: center;
+    text-align: left !important;
     margin-bottom: 3rem !important;
     font-style: italic;
     line-height: 1.6;
@@ -660,7 +660,7 @@ html {
     font-family: 'Courier New', monospace;
     font-size: 11px;
     line-height: 1;
-    color: #771040;
+    color: #c500a3;
     white-space: pre;
     margin: 0;
     padding: 0.5rem;

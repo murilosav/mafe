@@ -197,7 +197,7 @@ body {
 }
 
 .main-title {
-    font-family: 'Great Vibes', cursive;
+    font-family: cursive;
     font-size: 3.8rem;
     font-weight: 400;
     background: linear-gradient(135deg, var(--rose-gold), var(--burgundy));
@@ -359,7 +359,7 @@ body {
 }
 
 .letter-title {
-    font-family: 'Dancing Script', cursive;
+    font-family: cursive;
     font-size: 2.8rem;
     background: linear-gradient(135deg, var(--rose-gold), var(--burgundy));
     -webkit-background-clip: text;
@@ -734,7 +734,7 @@ html {
 }
 
 .ascii-caption p {
-    font-family: 'Dancing Script', cursive;
+    font-family: cursive;
     font-size: 1.4rem;
     background: linear-gradient(135deg, var(--rose-gold), var(--burgundy));
     -webkit-background-clip: text;

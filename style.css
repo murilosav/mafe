@@ -619,10 +619,10 @@ html {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 2rem 0;
 }
 
 .ascii-frame {
+    display: grid;
     position: relative;
     background: var(--glass);
     backdrop-filter: blur(25px);
@@ -642,23 +642,10 @@ html {
     -webkit-overflow-scrolling: touch;
 }
 
-.ascii-frame::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, var(--rose-gold), var(--mauve), var(--rose-gold));
-    border-radius: 25px 25px 0 0;
-    background-size: 300px 100%;
-    animation: shimmerRose 4s ease-in-out infinite;
-    z-index: 1;
-}
 
 .ascii-art {
     font-family: 'Courier New', monospace;
-    font-size: 11px;
+    font-size: 6px;
     line-height: 1;
     color: #c500a3;
     white-space: pre;
@@ -718,6 +705,7 @@ html {
     scrollbar-width: thin;
     scrollbar-color: var(--rose-gold) rgba(232, 180, 203, 0.2);
 }
+
 
 .ascii-art:hover {
     text-shadow: 0 0 4px rgba(232, 180, 203, 0.5);

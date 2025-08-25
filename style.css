@@ -660,7 +660,7 @@ html {
     font-family: 'Courier New', monospace;
     font-size: 11px;
     line-height: 1;
-    color: #f1006f;
+    color: #771040;
     white-space: pre;
     margin: 0;
     padding: 0.5rem;
@@ -668,7 +668,6 @@ html {
     background: transparent;
     border: none;
     outline: none;
-    animation: breathe 8s ease-in-out infinite;
     
     /* CRUCIAL: Definir largura e altura corretas */
     width: max-content;
@@ -721,7 +720,6 @@ html {
 }
 
 .ascii-art:hover {
-    color: #b10455;
     text-shadow: 0 0 4px rgba(232, 180, 203, 0.5);
     transition: all 0.3s ease;
 }

@@ -4,6 +4,10 @@
     box-sizing: border-box;
 }
 
+.sdds {
+    background-color: #ff29479e;
+}
+
 :root {
     /* Paleta romântica e aesthetic */
     --rose-gold: #e8b4cb;
@@ -782,3 +786,4 @@ html {
     transform: translateY(-2px);
     transition: all 0.3s ease;
 }
+

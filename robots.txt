@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://murilosav.github.io/mafe/sitemap.xml

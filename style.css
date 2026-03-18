@@ -950,6 +950,35 @@ body::before {
 }
 
 /* ============================================================
+   PLAYLIST SECTION
+   ============================================================ */
+
+.playlist-section {
+    margin: 4rem 0;
+}
+
+.playlist-card {
+    background: var(--bg-card);
+    backdrop-filter: blur(24px) saturate(1.4);
+    -webkit-backdrop-filter: blur(24px) saturate(1.4);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--shadow-soft);
+    overflow: hidden;
+    transition: border-color var(--transition-base);
+}
+
+.playlist-card:hover {
+    border-color: rgba(232, 180, 203, 0.35);
+}
+
+.playlist-card iframe {
+    display: block;
+    border-radius: 12px;
+}
+
+/* ============================================================
    EASTER EGGS
    ============================================================ */
 
